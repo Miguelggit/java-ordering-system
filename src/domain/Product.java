@@ -45,4 +45,9 @@ public class Product {
     public int hashCode() {
         return Objects.hashCode(id);
     }
+
+    @Override
+    public String toString() {
+        return String.format("ID: %d | Name: %s | Price: R$ %.2f | Stock: %d", getId(), getName(), getPrice(), getStock());
+    }
 }

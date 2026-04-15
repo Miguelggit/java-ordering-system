@@ -2,6 +2,7 @@ package domain;
 
 import exception.StockProductException;
 
+import java.util.ArrayList;
 import java.util.List;
 import java.util.Objects;
 
@@ -38,6 +39,16 @@ public class Order {
             total += i.getProduct().getPrice() * i.getQuantity();
         }
         return total;
+    }
+
+    public List<Item> filterByMinPrice(int value){
+        List<Item> itensFilter = new ArrayList<>();
+        for(Item i : getProduct()){
+            if(i.getProduct().getPrice() <= value){
+                itensFilter.add(i);
+            }
+        }
+        return itensFilter;
     }
 
     @Override

@@ -36,4 +36,9 @@ public class Item {
     public int hashCode() {
         return Objects.hashCode(id);
     }
+
+    @Override
+    public String toString() {
+        return "Produto: "+ getProduct() + " | Quantity order:" + getQuantity()+ "\n";
+    }
 }
