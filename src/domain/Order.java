@@ -2,9 +2,7 @@ package domain;
 
 import exception.StockProductException;
 
-import java.util.ArrayList;
-import java.util.List;
-import java.util.Objects;
+import java.util.*;
 
 public class Order {
     private Long id;
@@ -51,6 +49,12 @@ public class Order {
         return itensFilter;
     }
 
+    public List<Item> sortedOrdersByValue(){
+        List<Item> sortedList = new ArrayList<>(getProduct()); //* Adiciona os produtos para a nova lista
+        sortedList.sort(Comparator.comparing(p -> p.getProduct().getPrice())); //* Ordena os produtos
+        Collections.reverse(sortedList); //* Inverte a ordenação
+        return sortedList;
+    }
     @Override
     public boolean equals(Object o) {
         if (o == null || getClass() != o.getClass()) return false;

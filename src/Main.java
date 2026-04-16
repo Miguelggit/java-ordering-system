@@ -33,5 +33,6 @@ public class Main {
         System.out.println(p2.getStock());
         System.out.println(p3.getStock());
         System.out.println(o1.filterByMinPrice(400));
+        System.out.println(o1.sortedOrdersByValue());
     }
 }
