@@ -1,7 +1,4 @@
-import domain.Customer;
-import domain.Item;
-import domain.Order;
-import domain.Product;
+import domain.*;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -11,6 +8,7 @@ import java.util.List;
 public class Main {
     public static void main(String[] args) {
         Customer c1 = new Customer(1L, "Miguel");
+        Customer c2 = new Customer(2L, "Maria");
 
         Product p1 = new Product(1L, "Notebook", 3500D, 30);
         Product p2 = new Product(2L, "Mosue", 150D, 200);
@@ -25,8 +23,13 @@ public class Main {
         Item i5 = new Item(5L, p5, 1);
 
         List<Item> itens = new ArrayList<>(List.of(i1, i3, i2, i5, i4));
+        List<Item> itens2 = new ArrayList<>(List.of(i5, i4));
 
         Order o1 = new Order(1L, c1, itens);
+        Order o2 = new Order(2L, c2, itens2);
+
+        Cart cart = new Cart();
+        Cart cart2 = new Cart();
 
         System.out.println(o1.calculateTovalValue());
         System.out.println(p1.getStock());
@@ -34,5 +37,11 @@ public class Main {
         System.out.println(p3.getStock());
         System.out.println(o1.filterByMinPrice(400));
         System.out.println(o1.sortedOrdersByValue());
+        System.out.println(cart2.addToCart(o2));
+        System.out.println("---------------------");
+        System.out.println(cart.addToCart(o1));
+        System.out.println(cart.calculateTotalPerCustomer());
+        System.out.println("-----------------------");
+        System.out.println(cart2.calculateTotalPerCustomer());
     }
 }

@@ -30,10 +30,6 @@ public class Order {
     public double calculateTovalValue(){
         double total = 0.0;
         for(Item i : getProduct()){
-            if(i.getQuantity() > i.getProduct().getStock()){
-                throw new StockProductException("The stock of product is above for quantity request!");
-            }
-            i.getProduct().setStock(i.getProduct().getStock() - i.getQuantity());
             total += i.getProduct().getPrice() * i.getQuantity();
         }
         return total;
@@ -65,5 +61,14 @@ public class Order {
     @Override
     public int hashCode() {
         return Objects.hashCode(id);
+    }
+
+    @Override
+    public String toString() {
+        return "Order{" +
+                "id=" + id +
+                ", customer=" + customer +
+                ", Itens=" + Itens +
+                '}';
     }
 }
