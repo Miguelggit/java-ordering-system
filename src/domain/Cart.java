@@ -1,6 +1,5 @@
 package domain;
 import exception.StockProductException;
-
 import java.util.*;
 
 public class Cart{
@@ -46,6 +45,27 @@ public class Cart{
         return Optional.ofNullable(topCustomer);
     }
 
+    public Optional<Product> productBestSelling() {
+        Map<Product, Integer> productQuantities = new HashMap<>();
+        for (Map.Entry<Customer, List<Order>> entry : cart.entrySet()) {
+            entry.getValue().forEach(order -> {
+                for (Item i : order.getProduct()) {
+                    Product product= i.getProduct();
+                    int currentQuantity= productQuantities.getOrDefault(product, 0);
+                    productQuantities.put(product, currentQuantity + i.getQuantity());
+                }
+            });
+        }
+        int maxQuantity = 0;
+        Product bestSelling = null;
+        for (Map.Entry<Product, Integer> entry : productQuantities.entrySet()) {
+            if (entry.getValue() > maxQuantity) {
+                maxQuantity = entry.getValue();
+                bestSelling = entry.getKey();
+            }
+        }
+        return Optional.ofNullable(bestSelling);
+    }
     @Override
     public String toString() {
         return "Cart: "+ cart;

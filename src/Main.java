@@ -21,7 +21,7 @@ public class Main {
         Item i11 = new Item(30L, p1, 2);
         Item i2 = new Item(2L, p2, 1);
         Item i12 = new Item(23L, p2, 2);
-        Item i3 = new Item(3L, p3, 1);
+        Item i3 = new Item(3L, p3, 12);
         Item i44 = new Item(319L, p3, 2);
         Item i4 = new Item(4L, p4, 1);
         Item i5 = new Item(5L, p5, 1);
@@ -40,5 +40,6 @@ public class Main {
         cart.addToCart(o3);
         cart.calculateTotalPerCustomer();
         System.out.println(cart.customerWhoSpentTheMost());
+        cart.productBestSelling().ifPresent( s -> System.out.println("Produto mais vendido é " + s));
     }
 }
