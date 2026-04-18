@@ -1,13 +1,7 @@
 package domain;
-
-import domain.Item;
-import domain.Order;
 import exception.StockProductException;
 
-import java.util.ArrayList;
-import java.util.HashMap;
-import java.util.List;
-import java.util.Map;
+import java.util.*;
 
 public class Cart{
     private Map<Customer, List<Order>> cart = new HashMap<>();
@@ -39,12 +33,33 @@ public class Cart{
         });
         return listCalc;
     }
+    public Optional<Customer> customerWhoSpentTheMost(){
+        Customer topCustomer = null;
+        Double maxValue = 0.0;
+        Map<Customer, Double> dataOrders = calculateTotalPerCustomer();
+        for(Map.Entry<Customer, Double> entry : dataOrders.entrySet()){
+            if(entry.getValue() > maxValue){
+                maxValue = entry.getValue();
+                topCustomer = entry.getKey();
+            }
+        }
+        return Optional.ofNullable(topCustomer);
+    }
 
     @Override
     public String toString() {
         return "Cart: "+ cart;
     }
 
+    @Override
+    public boolean equals(Object o) {
+        if (o == null || getClass() != o.getClass()) return false;
+        Cart cart1 = (Cart) o;
+        return Objects.equals(cart, cart1.cart);
+    }
 
-
+    @Override
+    public int hashCode() {
+        return Objects.hashCode(cart);
+    }
 }
