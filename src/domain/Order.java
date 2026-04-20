@@ -49,8 +49,6 @@ public class Order {
         Collections.reverse(sortedList); //* Inverte a ordenação
         return sortedList;
     }
-
-
     @Override
     public boolean equals(Object o) {
         if (o == null || getClass() != o.getClass()) return false;

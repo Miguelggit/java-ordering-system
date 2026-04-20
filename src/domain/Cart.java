@@ -44,7 +44,6 @@ public class Cart{
         }
         return Optional.ofNullable(topCustomer);
     }
-
     public Optional<Product> productBestSelling() {
         Map<Product, Integer> productQuantities = new HashMap<>();
         for (Map.Entry<Customer, List<Order>> entry : cart.entrySet()) {
@@ -65,6 +64,18 @@ public class Cart{
             }
         }
         return Optional.ofNullable(bestSelling);
+    }
+
+    public List<Customer> top3Customers(){
+        List<Map.Entry<Customer, Double>> list = new ArrayList<>(calculateTotalPerCustomer().entrySet());
+        List<Customer> topTiers = new ArrayList<>();
+        list.sort(Map.Entry.comparingByValue(Comparator.reverseOrder()));
+        list.forEach( o1 -> {
+            if(topTiers.size() < 3){
+                topTiers.add(o1.getKey());
+            }
+        });
+        return topTiers;
     }
     @Override
     public String toString() {
