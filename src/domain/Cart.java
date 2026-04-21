@@ -77,6 +77,20 @@ public class Cart{
         });
         return topTiers;
     }
+
+    public Double avgValueByOrder(){
+        Double total = 0.0;
+        int quantity=0;
+        for(Map.Entry<Customer, List<Order>> input: cart.entrySet()){ //* Entro no meu cart
+            for( Order o: input.getValue()){ //* Para cada ordem que eu tenho eu vou somar todos os itens de acordo com a quantidade que foi pedida e alocar no total
+                for(Item i : o.getProduct()){ //* Para cada item irei fazer a soma total de cada item que estiver na lista, resumindo se uma ordem tiver 2 itens eu irei fazer a soma total destes dois itens e logo em seguida irei adicionar uma quantity
+                    total += i.getQuantity() * i.getProduct().getPrice(); //* soma dos itens
+                }
+                quantity++;
+            }
+        }
+        return total / quantity;
+    }
     @Override
     public String toString() {
         return "Cart: "+ cart;

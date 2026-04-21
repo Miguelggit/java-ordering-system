@@ -20,16 +20,16 @@ public class Main {
         Product p5 = new Product(5L, "Headset", 199.99D, 15);
 
         Item i1 = new Item(1L, p1, 1);
-        Item i11 = new Item(30L, p1, 2);
+        Item i11 = new Item(30L, p1, 1);
         Item i2 = new Item(2L, p2, 1);
-        Item i12 = new Item(23L, p2, 2);
+        Item i12 = new Item(23L, p2, 1);
         Item i3 = new Item(3L, p3, 1);
-        Item i44 = new Item(319L, p3, 2);
+        Item i44 = new Item(319L, p3, 1);
         Item i4 = new Item(4L, p4, 1);
         Item i5 = new Item(5L, p5, 1);
 
         List<Item> itens = new ArrayList<>(List.of(i1, i2));
-        List<Item> itens2 = new ArrayList<>(List.of(i44, i3, i4));
+        List<Item> itens2 = new ArrayList<>(List.of(i44));
         List<Item> itens3 = new ArrayList<>(List.of(i12, i1, i5));
         List<Item> itens4= new ArrayList<>(List.of(i4, i44));
         List<Item> itens5 = new ArrayList<>(List.of(i1));
@@ -43,12 +43,11 @@ public class Main {
         Cart cart = new Cart();
         cart.addToCart(o1);
         cart.addToCart(o2);
-        cart.addToCart(o3);
-        cart.addToCart(o4);
-        cart.addToCart(o5);
         cart.calculateTotalPerCustomer();
         System.out.println(cart.customerWhoSpentTheMost());
         cart.productBestSelling().ifPresent( s -> System.out.println("Produto mais vendido é " + s));
         System.out.println(cart.top3Customers());
+        System.out.println("---------------------------");
+        System.out.printf("R$ %.2f", cart.avgValueByOrder());
     }
 }
