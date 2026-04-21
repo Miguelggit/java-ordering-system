@@ -14,6 +14,8 @@ Sistema de pedidos desenvolvido em Java com Programação Orientada a Objetos pu
 - Cálculo do total gasto por cliente usando `Map<Customer, Double>`
 - Identificação do cliente que mais gastou com `Optional<Customer>`
 - Agrupamento de pedidos por cliente usando `Map<Customer, List<Order>>`
+- Identificação do produto mais vendido somando quantidades de todos os pedidos
+- Ranking dos **top 3 clientes** que mais gastaram ordenados por valor decrescente
 
 ---
 
@@ -100,8 +102,8 @@ src/
 - [x] Cliente que mais gastou
 
 ### Level 3 — Advanced ⏳
-- [ ] Produto mais vendido
-- [ ] Top 3 clientes que mais gastaram
+- [x] Produto mais vendido
+- [x] Top 3 clientes que mais gastaram
 - [ ] Média de valor dos pedidos
 
 ### Phase 2 — Refactoring
