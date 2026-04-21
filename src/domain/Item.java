@@ -1,5 +1,8 @@
 package domain;
 
+import exception.InvalidQuantityException;
+import exception.NullProductException;
+
 import java.util.Objects;
 
 public class Item {
@@ -8,6 +11,12 @@ public class Item {
     private int quantity;
 
     public Item(Long id, Product product, int quantity) {
+        if(quantity <= 0){
+            throw new InvalidQuantityException("Item quantity must be greater than zero");
+        }
+        if(product == null){
+            throw new NullProductException("Item must have a product associated");
+        }
         this.id = id;
         this.product = product;
         this.quantity = quantity;

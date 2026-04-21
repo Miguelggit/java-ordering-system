@@ -1,0 +1,7 @@
+package exception;
+
+public class DuplicateOrderException extends RuntimeException {
+    public DuplicateOrderException(String s) {
+        super(s);
+    }
+}

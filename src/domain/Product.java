@@ -1,5 +1,7 @@
 package domain;
 
+import exception.InvalidPriceException;
+
 import java.util.Objects;
 
 public class Product {
@@ -8,6 +10,9 @@ public class Product {
     private Double price;
     private int stock;
     public Product(Long id, String name, Double price, int quantity) {
+        if(price <= 0){
+            throw new InvalidPriceException("Product price must be greater than zero");
+        }
         this.id = id;
         this.name = name;
         this.price = price;
@@ -38,12 +43,12 @@ public class Product {
     public boolean equals(Object o) {
         if (o == null || getClass() != o.getClass()) return false;
         Product product = (Product) o;
-        return stock == product.stock && Objects.equals(id, product.id) && Objects.equals(name, product.name) && Objects.equals(price, product.price);
+        return Objects.equals(id, product.id);
     }
 
     @Override
     public int hashCode() {
-        return Objects.hash(id, name, price, stock);
+        return Objects.hashCode(id);
     }
 
     @Override

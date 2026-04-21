@@ -1,13 +1,22 @@
 package domain;
 
+import exception.EmptyOrderException;
+import exception.NullCustomerException;
+
 import java.util.*;
 
 public class Order {
     private Long id;
     private Customer customer;
-    private List<Item> Itens;
+    private List<Item> Itens = new ArrayList<>();
 
     public Order(Long id, Customer customer, List<Item> product) {
+        if(customer == null){
+            throw new NullCustomerException("Order must have a customer associated");
+        }
+        if(product == null || product.isEmpty()){
+            throw new EmptyOrderException("Order must contain at least one item.");
+        }
         this.id = id;
         this.customer = customer;
         this.Itens = product;
@@ -26,6 +35,9 @@ public class Order {
     }
 
     public double calculateTovalValue(){
+        if(getProduct().isEmpty()){
+            throw new EmptyOrderException("Order must contain at least one item.");
+        }
         double total = 0.0;
         for(Item i : getProduct()){
             total += i.getProduct().getPrice() * i.getQuantity();
