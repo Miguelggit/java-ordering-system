@@ -22,6 +22,10 @@ public class Order {
         this.Itens = product;
     }
 
+    public List<Item> getItens() {
+        return Itens;
+    }
+
     public Long getId() {
         return id;
     }

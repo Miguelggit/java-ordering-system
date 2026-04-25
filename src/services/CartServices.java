@@ -1,17 +1,11 @@
 package services;
 
-import domain.Cart;
-import domain.Customer;
-import domain.Item;
-import domain.Order;
+import domain.*;
 import exception.DuplicateOrderException;
 import exception.EmptyCartException;
 import exception.StockProductException;
 
-import java.util.ArrayList;
-import java.util.HashMap;
-import java.util.List;
-import java.util.Map;
+import java.util.*;
 
 public class CartServices {
     public void addToCart(Cart cart, Order order){
@@ -46,5 +40,68 @@ public class CartServices {
             listCalc.put(customer, total[0]);
         });
         return listCalc;
+    }
+    public Optional<Customer> customerWhoSpentTheMost(Cart cart){
+        Customer topCustomer = null;
+        Double maxValue = 0.0;
+        for(Map.Entry<Customer, Double> entry : calculateTotalPerCustomer(cart).entrySet()){
+            if(entry.getValue() > maxValue){
+                maxValue = entry.getValue();
+                topCustomer = entry.getKey();
+            }
+        }
+        return Optional.ofNullable(topCustomer);
+    }
+    public Optional<Product> productBestSelling(Cart cart) {
+        Map<Product, Integer> productQuantities = new HashMap<>();
+        if(cart.getCart().isEmpty()){
+            throw new EmptyCartException("Cart is empty. No data available for this operation.");
+        }
+        for (Map.Entry<Customer, List<Order>> entry : cart.getCart().entrySet()) {
+            entry.getValue().forEach(order -> {
+                for (Item i : order.getItems()) {
+                    Product product= i.getProduct();
+                    int currentQuantity= productQuantities.getOrDefault(product, 0);
+                    productQuantities.put(product, currentQuantity + i.getQuantity());
+                }
+            });
+        }
+        int maxQuantity = 0;
+        Product bestSelling = null;
+        for (Map.Entry<Product, Integer> entry : productQuantities.entrySet()) {
+            if (entry.getValue() > maxQuantity) {
+                maxQuantity = entry.getValue();
+                bestSelling = entry.getKey();
+            }
+        }
+        return Optional.ofNullable(bestSelling);
+    }
+    public List<Customer> top3Customers(Cart cart){
+        List<Map.Entry<Customer, Double>> list = new ArrayList<>(calculateTotalPerCustomer(cart).entrySet());
+        List<Customer> topTiers = new ArrayList<>();
+        list.sort(Map.Entry.comparingByValue(Comparator.reverseOrder()));
+        list.forEach( o1 -> {
+            if(topTiers.size() < 3){
+                topTiers.add(o1.getKey());
+            }
+        });
+        return topTiers;
+    }
+
+    public Double avgValueByOrder(Cart cart){
+        Double total = 0.0;
+        int quantity=0;
+        if(cart.getCart().isEmpty()){
+            throw new EmptyCartException("Cart is empty. No data available for this operation.");
+        }
+        for(Map.Entry<Customer, List<Order>> input: cart.getCart().entrySet()){ //* Entro no meu cart
+            for( Order o: input.getValue()){ //* Para cada ordem que eu tenho eu vou somar todos os itens de acordo com a quantidade que foi pedida e alocar no total
+                for(Item i : o.getItems()){ //* Para cada item irei fazer a soma total de cada item que estiver na lista, resumindo se uma ordem tiver 2 itens eu irei fazer a soma total destes dois itens e logo em seguida irei adicionar uma quantity
+                    total += i.getQuantity() * i.getProduct().getPrice(); //* soma dos itens
+                }
+                quantity++;
+            }
+        }
+        return total / quantity;
     }
 }
