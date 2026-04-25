@@ -1,4 +1,6 @@
 import domain.*;
+import services.CartServices;
+import services.OrderServices;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -36,20 +38,23 @@ public class Main {
             List<Item> itens5 = new ArrayList<>(List.of(i1));
 
             Order o1 = new Order(1L, c2, itens);
-            Order o2 = new Order(1L, c2, itens2);
+            Order o2 = new Order(1L, c1, itens2);
             Order o3 = new Order(3L, c3, itens3);
             Order o4 = new Order(4L, c4, itens4);
             Order o5 = new Order(5L, c5, itens5);
-
+            OrderServices orderServices = new OrderServices();
+            CartServices cartServices = new CartServices();
             Cart cart = new Cart();
-            cart.addToCart(o1);
-            cart.addToCart(o2);
-            cart.calculateTotalPerCustomer();
-            System.out.println(cart.customerWhoSpentTheMost());
-            cart.productBestSelling().ifPresent(s -> System.out.println("Produto mais vendido é " + s));
-            System.out.println(cart.top3Customers());
-            System.out.println("---------------------------");
-            System.out.printf("R$ %.2f", cart.avgValueByOrder());
+            orderServices.addToCart(cart, o1);
+            orderServices.addToCart(cart, o3);
+            orderServices.addToCart(cart, o4);
+            orderServices.addToCart(cart, o5);
+            orderServices.addToCart(cart, o2);
+            System.out.println(cartServices.calculateTotalPerCustomer(cart));
+            System.out.println(cartServices.customerWhoSpentTheMost(cart));
+            System.out.println(cartServices.productBestSelling(cart));
+            System.out.println(cartServices.top3Customers(cart));
+            System.out.println(cartServices.avgValueByOrder(cart));
         } catch (RuntimeException e) {
             System.err.println(e.getMessage());
             }

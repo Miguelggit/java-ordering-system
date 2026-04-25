@@ -8,7 +8,7 @@ import java.util.*;
 public class Order {
     private Long id;
     private Customer customer;
-    private List<Item> Itens = new ArrayList<>();
+    private List<Item> Items = new ArrayList<>();
 
     public Order(Long id, Customer customer, List<Item> product) {
         if(customer == null){
@@ -19,11 +19,7 @@ public class Order {
         }
         this.id = id;
         this.customer = customer;
-        this.Itens = product;
-    }
-
-    public List<Item> getItens() {
-        return Itens;
+        this.Items = product;
     }
 
     public Long getId() {
@@ -35,7 +31,7 @@ public class Order {
     }
 
     public List<Item> getItems() {
-        return Itens;
+        return Items;
     }
     @Override
     public boolean equals(Object o) {
@@ -54,7 +50,7 @@ public class Order {
         return "Order{" +
                 "id=" + id +
                 ", customer=" + customer +
-                ", Itens=" + Itens +
+                ", Itens=" + Items +
                 '}';
     }
 }
