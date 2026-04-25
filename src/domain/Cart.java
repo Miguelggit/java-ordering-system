@@ -5,7 +5,6 @@ import exception.StockProductException;
 import java.util.*;
 
 public class Cart{
-
     private Map<Customer, List<Order>> cart = new HashMap<>();
     public List<Order> addToCart(Order order){
         List<Order> orderList = cart.get(order.getCustomer());
@@ -16,7 +15,7 @@ public class Cart{
         if(orderList.contains(order)){
             throw new DuplicateOrderException("Order with id " + order.getId() + " already exists in cart.");
         }
-        for(Item i: order.getProduct()){
+        for(Item i: order.getItems()){
             if(i.getQuantity() > i.getProduct().getStock()){
                 throw new StockProductException("The stock of product is above for quantity request!");
             }
@@ -33,7 +32,7 @@ public class Cart{
         cart.forEach((customer, orders) -> {
             double[] total = {0.0};
             orders.forEach(order -> {
-                for(Item i: order.getProduct()){
+                for(Item i: order.getItems()){
                     total[0] += i.getProduct().getPrice() * i.getQuantity();
                 }
             });
@@ -59,7 +58,7 @@ public class Cart{
         }
         for (Map.Entry<Customer, List<Order>> entry : cart.entrySet()) {
             entry.getValue().forEach(order -> {
-                for (Item i : order.getProduct()) {
+                for (Item i : order.getItems()) {
                     Product product= i.getProduct();
                     int currentQuantity= productQuantities.getOrDefault(product, 0);
                     productQuantities.put(product, currentQuantity + i.getQuantity());
@@ -89,6 +88,10 @@ public class Cart{
         return topTiers;
     }
 
+    public Map<Customer, List<Order>> getCart() {
+        return cart;
+    }
+
     public Double avgValueByOrder(){
         Double total = 0.0;
         int quantity=0;
@@ -97,7 +100,7 @@ public class Cart{
         }
         for(Map.Entry<Customer, List<Order>> input: cart.entrySet()){ //* Entro no meu cart
             for( Order o: input.getValue()){ //* Para cada ordem que eu tenho eu vou somar todos os itens de acordo com a quantidade que foi pedida e alocar no total
-                for(Item i : o.getProduct()){ //* Para cada item irei fazer a soma total de cada item que estiver na lista, resumindo se uma ordem tiver 2 itens eu irei fazer a soma total destes dois itens e logo em seguida irei adicionar uma quantity
+                for(Item i : o.getItems()){ //* Para cada item irei fazer a soma total de cada item que estiver na lista, resumindo se uma ordem tiver 2 itens eu irei fazer a soma total destes dois itens e logo em seguida irei adicionar uma quantity
                     total += i.getQuantity() * i.getProduct().getPrice(); //* soma dos itens
                 }
                 quantity++;
