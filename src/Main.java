@@ -45,11 +45,11 @@ public class Main {
             OrderServices orderServices = new OrderServices();
             CartServices cartServices = new CartServices();
             Cart cart = new Cart();
-            orderServices.addToCart(cart, o1);
-            orderServices.addToCart(cart, o3);
-            orderServices.addToCart(cart, o4);
-            orderServices.addToCart(cart, o5);
-            orderServices.addToCart(cart, o2);
+            cartServices.addToCart(cart, o1);
+            cartServices.addToCart(cart, o3);
+            cartServices.addToCart(cart, o4);
+            cartServices.addToCart(cart, o5);
+            cartServices.addToCart(cart, o2);
             System.out.println(cartServices.calculateTotalPerCustomer(cart));
             System.out.println(cartServices.customerWhoSpentTheMost(cart));
             System.out.println(cartServices.productBestSelling(cart));
