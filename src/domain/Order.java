@@ -12,7 +12,6 @@ public class Order {
     private List<Item> Items = new ArrayList<>();
 
     public Order(Long id, Customer customer, List<Item> product) {
-
         if(customer == null){
             throw new NullCustomerException("Order must have a customer associated");
         }

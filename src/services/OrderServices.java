@@ -1,10 +1,7 @@
 package services;
 
-import domain.Cart;
 import domain.Item;
 import domain.Order;
-import exception.DuplicateOrderException;
-import exception.StockProductException;
 
 import java.util.ArrayList;
 import java.util.Comparator;
