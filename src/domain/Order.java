@@ -30,36 +30,8 @@ public class Order {
         return customer;
     }
 
-    public List<Item> getProduct() {
+    public List<Item> getItems() {
         return Itens;
-    }
-
-    public double calculateTovalValue(){
-        if(getProduct().isEmpty()){
-            throw new EmptyOrderException("Order must contain at least one item.");
-        }
-        double total = 0.0;
-        for(Item i : getProduct()){
-            total += i.getProduct().getPrice() * i.getQuantity();
-        }
-        return total;
-    }
-
-    public List<Item> filterByMinPrice(int value){
-        List<Item> itensFilter = new ArrayList<>();
-        for(Item i : getProduct()){
-            if(i.getProduct().getPrice() <= value){
-                itensFilter.add(i);
-            }
-        }
-        return itensFilter;
-    }
-
-    public List<Item> sortedOrdersByValue(){
-        List<Item> sortedList = new ArrayList<>(getProduct()); //* Adiciona os produtos para a nova lista
-        sortedList.sort(Comparator.comparing(p -> p.getProduct().getPrice())); //* Ordena os produtos
-        Collections.reverse(sortedList); //* Inverte a ordenação
-        return sortedList;
     }
     @Override
     public boolean equals(Object o) {
