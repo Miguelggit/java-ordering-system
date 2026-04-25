@@ -2,6 +2,7 @@ package domain;
 
 import exception.InvalidQuantityException;
 import exception.NullProductException;
+import exception.StockProductException;
 
 import java.util.Objects;
 
@@ -11,6 +12,9 @@ public class Item {
     private int quantity;
 
     public Item(Long id, Product product, int quantity) {
+        if(quantity > product.getStock()){
+            throw new StockProductException("The stock of product is above for quantity request!");
+        }
         if(quantity <= 0){
             throw new InvalidQuantityException("Item quantity must be greater than zero");
         }
