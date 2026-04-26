@@ -6,6 +6,7 @@ import exception.EmptyCartException;
 import exception.StockProductException;
 
 import java.util.*;
+import java.util.stream.Collectors;
 
 public class CartServices {
     public void addToCart(Cart cart, Order order){
@@ -19,20 +20,17 @@ public class CartServices {
         orderList.add(order);
     }
     public Map<Customer, Double> calculateTotalPerCustomer(Cart cart){
-        Map<Customer, Double> listCalc = new HashMap<>();
         if(cart.getOrders().isEmpty()){
             throw new EmptyCartException("Cart is empty. No data available for this operation.");
         }
-        cart.getOrders().forEach((customer, orders) -> {
-            double[] total = {0.0};
-            orders.forEach(order -> {
-                for(Item i: order.getItems()){
-                    total[0] += i.getProduct().getPrice() * i.getQuantity();
-                }
-            });
-            listCalc.put(customer, total[0]);
-        });
-        return listCalc;
+        return cart.getOrders().entrySet().stream()
+                        .collect(Collectors.toMap(
+                                entry -> entry.getKey(),
+                                entry -> entry.getValue().stream()
+                                        .flatMap(o -> o.getItems().stream())
+                                                .mapToDouble(i -> i.getProduct().getPrice() * i.getQuantity())
+                                                .sum()
+                                ));
     }
     public Optional<Customer> customerWhoSpentTheMost(Cart cart){
         Customer topCustomer = null;
