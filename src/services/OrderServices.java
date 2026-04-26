@@ -23,8 +23,8 @@ public class OrderServices {
     }
 
     public List<Item> sortedOrdersByValue(Order order){
-        List<Item> sortedList = new ArrayList<>(order.getItems()); //* Adiciona os produtos para a nova lista
-        sortedList.sort(Comparator.comparing(p -> p.getProduct().getPrice(), Comparator.reverseOrder())); //* Ordena os produtos
-        return sortedList;
+        return order.getItems().stream()
+                .sorted(Comparator.comparing(i -> i.getProduct().getPrice(), Comparator.reverseOrder()))
+                .toList();
     }
 }
