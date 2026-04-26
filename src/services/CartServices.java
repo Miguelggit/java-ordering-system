@@ -6,6 +6,7 @@ import exception.EmptyCartException;
 import exception.StockProductException;
 
 import java.util.*;
+import java.util.stream.Collector;
 import java.util.stream.Collectors;
 
 public class CartServices {
@@ -33,15 +34,9 @@ public class CartServices {
                                 ));
     }
     public Optional<Customer> customerWhoSpentTheMost(Cart cart){
-        Customer topCustomer = null;
-        Double maxValue = 0.0;
-        for(Map.Entry<Customer, Double> entry : calculateTotalPerCustomer(cart).entrySet()){
-            if(entry.getValue() > maxValue){
-                maxValue = entry.getValue();
-                topCustomer = entry.getKey();
-            }
-        }
-        return Optional.ofNullable(topCustomer);
+        return calculateTotalPerCustomer(cart).entrySet().stream()
+                .max(Comparator.comparingDouble(Map.Entry::getValue))
+                .map(Map.Entry::getKey);
     }
     public Optional<Product> productBestSelling(Cart cart) {
         Map<Product, Integer> productQuantities = new HashMap<>();
