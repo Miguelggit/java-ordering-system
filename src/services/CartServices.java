@@ -9,11 +9,7 @@ import java.util.*;
 
 public class CartServices {
     public void addToCart(Cart cart, Order order){
-        List<Order> orderList = cart.getOrders().get(order.getCustomer());
-        if(orderList == null){
-            orderList = new ArrayList<>();
-            cart.getOrders().put(order.getCustomer(), orderList);
-        }
+        List<Order> orderList = cart.getOrders().computeIfAbsent(order.getCustomer(), k -> new ArrayList<>());
         if(orderList.contains(order)){
             throw new DuplicateOrderException("Order with id " + order.getId() + " already exists in cart.");
         }
