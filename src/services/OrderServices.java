@@ -2,6 +2,7 @@ package services;
 
 import domain.Item;
 import domain.Order;
+import domain.Product;
 
 import java.util.ArrayList;
 import java.util.Comparator;
@@ -10,11 +11,9 @@ import java.util.stream.Collectors;
 
 public class OrderServices {
     public double calculateTotalValue(Order order){
-        double total = 0.0;
-        for(Item i : order.getItems()){
-            total += i.getProduct().getPrice() * i.getQuantity();
-        }
-        return total;
+        return order.getItems().stream()
+                .mapToDouble( i -> i.getProduct().getPrice() * i.getQuantity())
+                .sum();
     }
 
     public List<Item> filterByMaxPrice(Order order,  double value){
