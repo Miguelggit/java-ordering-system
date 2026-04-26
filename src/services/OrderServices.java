@@ -6,6 +6,7 @@ import domain.Order;
 import java.util.ArrayList;
 import java.util.Comparator;
 import java.util.List;
+import java.util.stream.Collectors;
 
 public class OrderServices {
     public double calculateTotalValue(Order order){
@@ -17,13 +18,9 @@ public class OrderServices {
     }
 
     public List<Item> filterByMaxPrice(Order order,  double value){
-        List<Item> itensFilter = new ArrayList<>();
-        for(Item i : order.getItems()){
-            if(i.getProduct().getPrice() <= value){
-                itensFilter.add(i);
-            }
-        }
-        return itensFilter;
+        return order.getItems().stream()
+                .filter(i -> i.getProduct().getPrice() <= value)
+                .toList();
     }
 
     public List<Item> sortedOrdersByValue(Order order){
