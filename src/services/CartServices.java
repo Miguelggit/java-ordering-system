@@ -39,28 +39,17 @@ public class CartServices {
                 .map(Map.Entry::getKey);
     }
     public Optional<Product> productBestSelling(Cart cart) {
-        Map<Product, Integer> productQuantities = new HashMap<>();
         if(cart.getOrders().isEmpty()){
             throw new EmptyCartException("Cart is empty. No data available for this operation.");
         }
-        for (Map.Entry<Customer, List<Order>> entry : cart.getOrders().entrySet()) {
-            entry.getValue().forEach(order -> {
-                for (Item i : order.getItems()) {
-                    Product product= i.getProduct();
-                    int currentQuantity= productQuantities.getOrDefault(product, 0);
-                    productQuantities.put(product, currentQuantity + i.getQuantity());
-                }
-            });
-        }
-        int maxQuantity = 0;
-        Product bestSelling = null;
-        for (Map.Entry<Product, Integer> entry : productQuantities.entrySet()) {
-            if (entry.getValue() > maxQuantity) {
-                maxQuantity = entry.getValue();
-                bestSelling = entry.getKey();
-            }
-        }
-        return Optional.ofNullable(bestSelling);
+        return cart.getOrders().values().stream()
+                .flatMap(List::stream)
+                .flatMap(order -> order.getItems().stream())
+                .collect(Collectors.groupingBy( Item::getProduct, Collectors.summingInt(Item::getQuantity)
+                ))
+                .entrySet().stream()
+                        .max(Map.Entry.comparingByValue())
+                        .map(Map.Entry::getKey);
     }
     public List<Customer> top3Customers(Cart cart){
         List<Map.Entry<Customer, Double>> list = new ArrayList<>(calculateTotalPerCustomer(cart).entrySet());
