@@ -52,15 +52,11 @@ public class CartServices {
                         .map(Map.Entry::getKey);
     }
     public List<Customer> top3Customers(Cart cart){
-        List<Map.Entry<Customer, Double>> list = new ArrayList<>(calculateTotalPerCustomer(cart).entrySet());
-        List<Customer> topTiers = new ArrayList<>();
-        list.sort(Map.Entry.comparingByValue(Comparator.reverseOrder()));
-        list.forEach( o1 -> {
-            if(topTiers.size() < 3){
-                topTiers.add(o1.getKey());
-            }
-        });
-        return topTiers;
+        return calculateTotalPerCustomer(cart).entrySet().stream()
+                .sorted(Map.Entry.<Customer, Double>comparingByValue().reversed())
+                .limit(3)
+                .map(Map.Entry::getKey)
+                .toList();
     }
     public Double avgValueByOrder(Cart cart){
         Double total = 0.0;
