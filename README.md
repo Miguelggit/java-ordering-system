@@ -2,7 +2,7 @@
 
 > Sistema de gerenciamento de pedidos com controle de estoque, análise de vendas e métricas de clientes desenvolvido com arquitetura limpa e princípios SOLID. **Atualmente em Java Core, migrando para Spring Boot.**
 
-[![Java](https://img.shields.io/badge/Java-17+-orange.svg)](https://www.oracle.com/java/)
+[![Java](https://img.shields.io/badge/Java-8+-orange.svg)](https://www.oracle.com/java/)
 [![Status](https://img.shields.io/badge/status-in%20development-yellow.svg)]()
 [![License](https://img.shields.io/badge/license-MIT-blue.svg)](LICENSE)
 [![pt-br](https://img.shields.io/badge/lang-pt--br-green.svg)](README.md)
@@ -32,14 +32,14 @@ Sistema Java Core com validações de negócio, controle de estoque, analytics e
 
 ### Analytics & Insights
 - 📊 **Total por Cliente** - Cálculo agregado de gastos individuais
-- 🏆 **Top Clientes** - Ranking dos 3 maiores compradores
+- 🏆 **Top 3 Clientes** - Ranking dos maiores compradores
 - 📈 **Produto Best-Seller** - Identificação do item mais vendido
 - 💰 **Ticket Médio** - Análise de valor médio dos pedidos
 - 🎯 **Cliente Premium** - Identificação do maior gastador
 
 ### Operações Avançadas
-- 🔍 **Filtragem Inteligente** - Busca de itens por faixa de preço
-- 📉 **Ordenação Customizada** - Múltiplos critérios de ordenação
+- 🔍 **Filtragem por Preço** - Busca de itens por valor máximo
+- 📉 **Ordenação por Valor** - Itens ordenados por preço decrescente
 - ⚡ **Processamento Funcional** - Streams API para alta performance
 
 ---
@@ -80,7 +80,6 @@ src/main/java/com.sistema.pedidos/
 - **SOLID** - Single Responsibility, Open/Closed, Dependency Inversion
 - **DRY** - Reutilização através de Streams API
 - **Fail-Fast** - Validações nos construtores
-- **Immutability** - Uso de Optional e Collections imutáveis onde aplicável
 
 ---
 
@@ -147,7 +146,7 @@ classDiagram
 ### Gestão de Estoque
 - ❌ **Estoque insuficiente bloqueia venda** - Validação no construtor de Item
 - ⚡ **Desconto automático** - Estoque atualizado ao adicionar no carrinho
-- 🔒 **Transacional** - Rollback em caso de falha (futuro com @Transactional)
+- 🔒 **Controle sequencial** - Desconto aplicado item por item (futuro: @Transactional)
 
 ### Integridade de Dados
 - 🆔 **Cliente único** - Identificação por ID com equals/hashCode
@@ -198,7 +197,7 @@ classDiagram
 ## 🚀 Como Executar
 
 ### Pré-requisitos
-- Java 17 ou superior
+- Java 8 ou superior
 - Maven 3.8+ (futuro)
 - Git
 
@@ -313,9 +312,8 @@ Este projeto está sob a licença MIT. Veja o arquivo [LICENSE](LICENSE) para ma
 ## 👤 Autor
 
 **Seu Nome**
-- GitHub: [@seu-usuario](https://github.com/seu-usuario)
-- LinkedIn: [Seu Nome](https://linkedin.com/in/seu-perfil)
-- Email: seu.email@example.com
+- GitHub: [miguelggit](https://github.com/Miguelggit)
+- Email: contato.miguel222@gmail.com
 
 ---
 

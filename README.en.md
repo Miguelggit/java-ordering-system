@@ -2,7 +2,7 @@
 
 > Order management system with inventory control, sales analytics, and customer metrics built with clean architecture and SOLID principles. **Currently in Java Core, migrating to Spring Boot.**
 
-[![Java](https://img.shields.io/badge/Java-17+-orange.svg)](https://www.oracle.com/java/)
+[![Java](https://img.shields.io/badge/Java-8+-orange.svg)](https://www.oracle.com/java/)
 [![Status](https://img.shields.io/badge/status-in%20development-yellow.svg)]()
 [![License](https://img.shields.io/badge/license-MIT-blue.svg)](LICENSE)
 [![pt-br](https://img.shields.io/badge/lang-pt--br-green.svg)](README.md)
@@ -38,8 +38,8 @@ Java Core system with business validations, inventory control, real-time analyti
 - 🎯 **Premium Customer** - Identification of highest spender
 
 ### Advanced Operations
-- 🔍 **Smart Filtering** - Search items by price range
-- 📉 **Custom Sorting** - Multiple sorting criteria
+- 🔍 **Price Filtering** - Search items by maximum value
+- 📉 **Value Sorting** - Items sorted by descending price
 - ⚡ **Functional Processing** - Streams API for high performance
 
 ---
@@ -80,7 +80,6 @@ src/main/java/com.sistema.pedidos/
 - **SOLID** - Single Responsibility, Open/Closed, Dependency Inversion
 - **DRY** - Reusability through Streams API
 - **Fail-Fast** - Validations in constructors
-- **Immutability** - Use of Optional and immutable Collections where applicable
 
 ---
 
@@ -147,7 +146,7 @@ classDiagram
 ### Inventory Management
 - ❌ **Insufficient stock blocks sale** - Validation in Item constructor
 - ⚡ **Automatic discount** - Stock updated when adding to cart
-- 🔒 **Transactional** - Rollback on failure (future with @Transactional)
+- 🔒 **Sequential control** - Discount applied item by item (future: @Transactional)
 
 ### Data Integrity
 - 🆔 **Unique customer** - Identification by ID with equals/hashCode
@@ -198,7 +197,7 @@ classDiagram
 ## 🚀 Getting Started
 
 ### Prerequisites
-- Java 17 or higher
+- Java 8 or higher
 - Maven 3.8+ (future)
 - Git
 
