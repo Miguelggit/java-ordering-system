@@ -50,10 +50,6 @@ public class Main {
             cartServices.addToCart(cart, o4);
             cartServices.addToCart(cart, o5);
             cartServices.addToCart(cart, o2);
-            System.out.println(cartServices.calculateTotalPerCustomer(cart));
-            System.out.println(cartServices.customerWhoSpentTheMost(cart));
-            System.out.println(cartServices.productBestSelling(cart));
-            System.out.println(cartServices.top3Customers(cart));
             System.out.println(cartServices.avgValueByOrder(cart));
         } catch (RuntimeException e) {
             System.err.println(e.getMessage());

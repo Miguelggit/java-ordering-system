@@ -3,7 +3,6 @@ import java.util.*;
 
 public class Cart{
     private Map<Customer, List<Order>> orders = new HashMap<>();
-
     public Map<Customer, List<Order>> getOrders() {
         return orders;
     }

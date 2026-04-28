@@ -8,6 +8,7 @@ import exception.StockProductException;
 import java.util.*;
 import java.util.stream.Collector;
 import java.util.stream.Collectors;
+import java.util.stream.Stream;
 
 public class CartServices {
     public void addToCart(Cart cart, Order order){
@@ -59,19 +60,17 @@ public class CartServices {
                 .toList();
     }
     public Double avgValueByOrder(Cart cart){
-        Double total = 0.0;
-        int quantity=0;
-        if(cart.getOrders().isEmpty()){
-            throw new EmptyCartException("Cart is empty. No data available for this operation.");
-        }
-        for(Map.Entry<Customer, List<Order>> input: cart.getOrders().entrySet()){ //* Entro no meu cart
-            for( Order o: input.getValue()){ //* Para cada ordem que eu tenho eu vou somar todos os itens de acordo com a quantidade que foi pedida e alocar no total
-                for(Item i : o.getItems()){ //* Para cada item irei fazer a soma total de cada item que estiver na lista, resumindo se uma ordem tiver 2 itens eu irei fazer a soma total destes dois itens e logo em seguida irei adicionar uma quantity
-                    total += i.getQuantity() * i.getProduct().getPrice(); //* soma dos itens
-                }
-                quantity++;
-            }
-        }
-        return total / quantity;
+        double totalValue = cart.getOrders().values().stream()
+                .flatMap(List::stream)
+                .flatMap(o -> o.getItems().stream())
+                .mapToDouble(item -> item.getQuantity() * item.getProduct().getPrice())
+                .sum();
+
+        long longStream = cart.getOrders().values().stream()
+                .flatMap(List::stream)
+                .map(o -> o.getItems().stream())
+                .count();
+
+        return totalValue / longStream;
     }
 }
